@@ -1,0 +1,20 @@
+from discord.ext.commands import Cog
+from discord.ext import commands
+from datetime import datetime
+
+__version__ = '0.0.1'
+
+class $Extension(Cog):
+    def __init__(self, bot):
+        self.bot = bot
+
+    # Events
+    #@Cog.listener()
+
+    # Default Vesion Command
+    @commands.command()
+    async def ${Extension}_version(self, ctx):
+        await ctx.send(f"[$Extension] - version: {__version__}")
+
+def setup(bot):
+    bot.add_cog($Extension(bot))
