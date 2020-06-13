@@ -4,12 +4,10 @@ from discord.ext import commands
 from tdb import logger
 
 class Main() :
-    def __init__(self):
-        load_dotenv(os.path('./'))
+    def __init__(self, config):
         self.Log = logger.GetLogger('logs', __name__)
-        self.Log.info("version v.0.0.1")
-        self.config = dict(token=os.getenv('DEVELOP_TOKEN'))
-        self.Log.info("Token Loaded.")
+        self.Log.info("Started v.0.0.1")
+        self.config = config
         self.bot = commands.Bot(command_prefix='.')
         self.load_extensions()
 
@@ -30,7 +28,3 @@ class Main() :
             self.bot.run(self.config['token'])
         except Exception as e:
             self.Log.info(e)
-
-if __name__ == '__main__':
-    main = Main()
-    main.run()

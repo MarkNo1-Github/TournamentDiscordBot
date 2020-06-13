@@ -20,6 +20,7 @@ setup(
     description='Manage Tournament in Discord',
     long_description=readme,
     packages=find_packages(exclude=['tests*']),
+    entry_points ={'console_scripts': ['tdb = tdb.manager:main']},
     install_requires=requirements,
     include_package_data=True,
     python_requires='>=3.6'
