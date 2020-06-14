@@ -7,7 +7,7 @@ __version__ = '0.0.1'
 
 
 code = Template(\
-'''from tdb.logger import GetLogger
+'''from tdbm.logger import GetLogger
 from discord.ext.commands import Cog
 from discord.ext import commands
 from datetime import datetime
@@ -34,10 +34,10 @@ def setup(bot):
 
 code_main = \
 '''
-from tdb.bot import Main
+from tdbm.bot import Main
 from dotenv import load_dotenv
 import os
-import tdb
+import tdbm
 
 
 def get_config():

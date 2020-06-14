@@ -12,7 +12,7 @@ with open('LICENSE') as f:
 
 
 setup(
-    name='tdb',
+    name='tdbm',
     author='MarkNo1',
     url='https://github.com/MarkNo1-github/TournamentDiscordBot',
     version='0.0.1',
@@ -20,7 +20,7 @@ setup(
     description='Manage Tournament in Discord',
     long_description=readme,
     packages=find_packages(exclude=['tests*']),
-    entry_points ={'console_scripts': ['tdb = tdb.manager:main']},
+    entry_points ={'console_scripts': ['tdbm = tdbm.manager:main']},
     install_requires=requirements,
     include_package_data=True,
     python_requires='>=3.6'

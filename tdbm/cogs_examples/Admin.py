@@ -1,4 +1,4 @@
-from tdb.logger import GetLogger
+from tdbm.logger import GetLogger
 from discord.ext.commands import Cog
 from discord.ext import commands
 
