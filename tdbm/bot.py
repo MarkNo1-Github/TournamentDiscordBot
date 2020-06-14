@@ -1,7 +1,7 @@
 import dotenv
 import os
 from discord.ext import commands
-from tdb import logger
+from tdbm import logger
 
 class Main() :
     def __init__(self, config):
