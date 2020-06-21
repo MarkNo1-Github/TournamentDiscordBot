@@ -30,18 +30,15 @@ def produce_packages_dirs():
     packages_dirs.update(produce_import_module('bot'))
     packages_dirs.update(produce_import_module('data'))
     packages_dirs.update(produce_import_module('logger'))
+    packages_dirs.update(produce_import_module('manager'))
     return packages_dirs
 
 def produce_packages():
     return [get_package_name(),
-              produce_module_dot('logger'),
-              produce_module_dot('data'),
-              produce_module_dot('bot')]
-
-ModuleLogger = 'logger'
-ModuleData = 'data'
-ModuleBot = 'bot'
-
+            produce_module_dot('manager'),
+            produce_module_dot('logger'),
+            produce_module_dot('data'),
+            produce_module_dot('bot')]
 
 
 setup(

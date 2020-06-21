@@ -7,13 +7,14 @@ from datetime import date
 class FileRaidEnum:
     init = lambda name :  f'Initialization File: {name}'
     reading = 'Reading'
+    data_not_created = 'Data file is not created yet.'
     writing = 'Writing'
     exit = lambda self, type, val, tb :  f'Exiting File: {type} {val} {tb}'
     file_path = lambda self, name, path : f'Path file {name}: {path}'
 
 
 class DataController(object):
-    def __init__(self, name):
+    def __init__(self, name, dataType):
         self.__doc__ = '''
 
         '''
@@ -25,7 +26,8 @@ class DataController(object):
         self.enum = FileRaidEnum()
         self.logger.debug(self.enum.file_path('Directory', self.dp))
         self.logger.debug(self.enum.file_path('Data File', self.fp))
-        self.logger.debug(self.enum.file_path('Log File', f'{self.dp}/{name}.store'))
+        self.logger.debug(self.enum.file_path('Log File', os.path.join(self.dp, f'{name}.store')))
+        self.dataType = dataType
 
     def __enter__(self):
         self.logger.debug(Success(self.enum.reading))
@@ -41,9 +43,13 @@ class DataController(object):
 
     def read(self):
         try:
-            data = read_hdf(self.fp, key=self.name, mode='r')
-            self.logger.debug(Success(self.enum.reading))
-            return data
+            if self.already_exist():
+                data = read_hdf(self.fp, key=self.name, mode='r')
+                self.logger.debug(Success(self.enum.reading))
+                return data
+            else:
+                self.logger.info(Success(self.enum.data_not_created))
+                return self.create_database()
         except Exception as e:
             self.logger.debug(Error(f'{e}'))
             return pd.DataFrame()
@@ -59,6 +65,10 @@ class DataController(object):
         except Exception as e:
             self.logger.debug(Error(f'{e}'))
 
+    def create_database(self):
+        temp = self.dataType()
+        return pd.DataFrame(columns=list(temp.__dict__.keys()))
+
     def already_exist(self):
         return os.path.exists(self.fp)
 
@@ -73,20 +83,19 @@ class IData:
         self.id = id
         self.name = name
 
+    def __str__(self):
+        return str(self.__dict__)
 
 
 class DataManager(object):
     def __init__(self, name, dataType: IData):
-        self.controller = DataController(name)
+        self.controller = DataController(name, dataType)
         self.data = self.controller()
 
         self.counter_id = 0
-        if self.data.empty:
-            temp = dataType()
-            self.data = pd.DataFrame(columns=list(temp.__dict__.keys()))
-            self.add(temp)
-        else:
+        if not self.data.empty:
             self.counter_id = self.data['id'].max()
+            
         self.controller.logger.debug(Success('Initialization'))
 
     def add(self, rowclass: IData):
