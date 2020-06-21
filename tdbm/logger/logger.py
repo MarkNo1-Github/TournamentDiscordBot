@@ -1,6 +1,5 @@
-from logging.handlers import TimedRotatingFileHandler
+
 from datetime import date
-import logging
 import os
 
 
@@ -8,7 +7,9 @@ __version__ = '0.0.5'
 
 
 def GetFileLogger(folder, name):
-    logger = logging.GetFileLogger(name)
+    import logging
+    from logging.handlers import TimedRotatingFileHandler
+    logger = logging.getLogger(name)
 
     if not os.path.exists(folder):
         os.makedirs(folder)
