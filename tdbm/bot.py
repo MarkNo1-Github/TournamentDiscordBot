@@ -3,10 +3,11 @@ import os
 from discord.ext import commands
 from tdbm import logger
 
+
 class Main() :
     def __init__(self, config):
         self.Log = logger.GetLogger('logs', __name__)
-        self.Log.info("Started v.0.0.1")
+        self.Log.info(f"Started TDBM version {tdbm_version}")
         self.config = config
         self.bot = commands.Bot(command_prefix='.')
         self.load_extensions()

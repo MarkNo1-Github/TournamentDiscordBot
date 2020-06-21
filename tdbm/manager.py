@@ -106,15 +106,17 @@ def parseArgs():
     parser.add_argument('--delete',  nargs='?', default='None', type=str)
     return  parser.parse_args()
 
+
+
 def main():
 
     config = parseArgs()
 
-        if config.init:
-            initworkspace()
+    if config.init:
+        initworkspace()
 
-        if config.new != 'None':
-            new_extension(config.new)
+    if config.new != 'None':
+        new_extension(config.new)
 
-        if config.delete != 'None':
-            remove_extension(config.delete)
+    if config.delete != 'None':
+        remove_extension(config.delete)
