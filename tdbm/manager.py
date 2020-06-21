@@ -99,12 +99,16 @@ def remove_extension(Extension: str):
         print(f"Extension {Extension} does not exist!")
 
 
+def parseArgs():
+    parser = argparse.ArgumentParser(description= f"Bot manager version {__version__}.")
+    parser.add_argument('--init', action='store_true' , default=False)
+    parser.add_argument('--new',  nargs='?', default='None', type=str)
+    parser.add_argument('--delete',  nargs='?', default='None', type=str)
+    return  parser.parse_args()
+
 def main():
-        parser = argparse.ArgumentParser(description= f"Bot manager version {__version__}.")
-        parser.add_argument('--init', action='store_true' , default=False)
-        parser.add_argument('--new',  nargs='?', default='None', type=str)
-        parser.add_argument('--delete',  nargs='?', default='None', type=str)
-        config = parser.parse_args()
+
+    config = parseArgs()
 
         if config.init:
             initworkspace()

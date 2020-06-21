@@ -1,4 +1,4 @@
-from setuptools import setup, find_packages
+from setuptools import setup, find_namespace_packages
 
 
 with open('requirements.txt') as f:
@@ -15,11 +15,11 @@ setup(
     name='tdbm',
     author='MarkNo1',
     url='https://github.com/MarkNo1-github/TournamentDiscordBot',
-    version='0.0.1',
+    version='0.0.3',
     license=license,
     description='Manage Tournament in Discord',
     long_description=readme,
-    packages=find_packages(exclude=['tests*']),
+    packages=find_namespace_packages(include=['tdbm.*']),
     entry_points ={'console_scripts': ['tdbm = tdbm.manager:main']},
     install_requires=requirements,
     include_package_data=True,

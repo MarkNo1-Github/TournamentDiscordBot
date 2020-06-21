@@ -12,6 +12,7 @@ class Main() :
         self.load_extensions()
 
     def load_extensions(self):
+        self.Log.info("Start")
         print('current paht', os.path.abspath('./'))
         extension_folder = os.path.join(os.path.abspath('./'), 'cogs')
         if os.path.exists(extension_folder):
@@ -22,6 +23,7 @@ class Main() :
             self.Log.info("Extensions Loaded.")
         else:
             self.Log.error("No Cogs Extensions folder")
+        self.Log.info("End")
 
     def run(self):
         try:
