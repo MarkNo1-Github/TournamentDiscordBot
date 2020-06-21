@@ -3,14 +3,12 @@ from setuptools import setup, find_namespace_packages
 
 with open('requirements.txt') as f:
     requirements = f.read().splitlines()
-    INSTALL_REQUIRES = True
 
 with open('README.md') as f:
     readme = f.read()
 
 with open('LICENSE') as f:
     license = f.read()
-
 
 
 # setup(
@@ -28,24 +26,47 @@ with open('LICENSE') as f:
 #     python_requires='>=3.6'
 # )
 
-def make_setup(module,include_package_data=False):
+setup(
+    name='tdbm.logger',
+    author='MarkNo1',
+    url='https://github.com/MarkNo1-github/TournamentDiscordBot',
+    version='0.0.5',
+    license=license,
+    description='Tdbm Logger',
+    long_description=readme,
+    package_dir={'': 'src'},
+    packages=find_namespace_packages(where='src'),
+    install_requires=requirements,
+    include_package_data=True,
+    python_requires='>=3.6'
+)
 
-    setup(
-        name=f'tdbm.{module}',
-        author='MarkNo1',
-        url='https://github.com/MarkNo1-github/TournamentDiscordBot',
-        version='0.0.5',
-        license=license,
-        description=f'Tdbm {str(module).upper()}',
-        long_description=readme,
-        package_dir={'': 'lib'},
-        packages=find_namespace_packages(where='lib'),
-        install_requires=requirements,
-        include_package_data=include_package_data,
-        python_requires='>=3.6'
-    )
+setup(
+    name='tdbm.data',
+    author='MarkNo1',
+    url='https://github.com/MarkNo1-github/TournamentDiscordBot',
+    version='0.0.5',
+    license=license,
+    description='Tdbm Data',
+    long_description=readme,
+    package_dir={'': 'src'},
+    packages=find_namespace_packages(where='src'),
+    install_requires=requirements,
+    include_package_data=True,
+    python_requires='>=3.6'
+)
 
-
-make_setup('logger')
-make_setup('bot')
-make_setup('data')
+setup(
+    name='tdbm.bot',
+    author='MarkNo1',
+    url='https://github.com/MarkNo1-github/TournamentDiscordBot',
+    version='0.0.5',
+    license=license,
+    description='Tdbm Bot',
+    long_description=readme,
+    package_dir={'': 'src'},
+    packages=find_namespace_packages(where='src'),
+    install_requires=requirements,
+    include_package_data=True,
+    python_requires='>=3.6'
+)
