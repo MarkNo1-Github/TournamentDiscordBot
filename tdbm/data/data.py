@@ -1,4 +1,4 @@
-from .logger import GetFileLogger, Success, Error
+from tdbm.logger import GetFileLogger, Success, Error
 import os
 import pandas as pd
 from pandas import read_hdf
