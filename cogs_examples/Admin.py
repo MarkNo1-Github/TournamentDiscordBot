@@ -1,4 +1,4 @@
-from tdbm.logger import GetLogger
+from tdbm.logger import GetFileLogger
 from discord.ext.commands import Cog
 from discord.ext import commands
 
@@ -7,7 +7,7 @@ __version__ = '0.0.1'
 class Admin(Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.Log = GetLogger('logs', __name__)
+        self.Log = GetFileLogger('logs', __name__)
 
     @commands.command()
     async def load(self, ctx, extension):

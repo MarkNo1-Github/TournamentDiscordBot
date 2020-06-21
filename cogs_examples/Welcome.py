@@ -1,4 +1,4 @@
-from tdbm.logger import GetLogger
+from tdbm.logger import GetFileLogger
 from discord.ext.commands import Cog
 from discord.ext import commands
 from datetime import datetime
@@ -11,7 +11,7 @@ class Welcome(Cog):
     def __init__(self, bot):
         self.bot = bot
         self._last_member = None
-        self.Log = GetLogger('logs', __name__)
+        self.Log = GetFileLogger('logs', __name__)
 
     @Cog.listener()
     async def on_member_join(self, member):

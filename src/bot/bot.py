@@ -6,7 +6,7 @@ from tdbm import logger
 
 class Main() :
     def __init__(self, config):
-        self.Log = logger.GetLogger('logs', __name__)
+        self.Log = logger.GetFileLogger('logs', __name__)
         self.Log.info(f"Started TDBM version {tdbm_version}")
         self.config = config
         self.bot = commands.Bot(command_prefix='.')

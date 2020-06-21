@@ -1,4 +1,4 @@
-from .logger import GetLogger, Success, Error
+from .logger import GetFileLogger, Success, Error
 import os
 import pandas as pd
 from pandas import read_hdf
@@ -21,7 +21,7 @@ class DataController(object):
         self.dp = os.path.dirname(os.path.abspath(os.getcwd()))
         self.dp = os.path.join(self.dp, name)
         self.fp = os.path.join(self.dp, f'{name}.data')
-        self.logger = GetLogger(self.dp, f'{name}.store')
+        self.logger = GetFileLogger(self.dp, f'{name}.store')
         self.enum = FileRaidEnum()
         self.logger.debug(self.enum.file_path('Directory', self.dp))
         self.logger.debug(self.enum.file_path('Data File', self.fp))

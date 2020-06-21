@@ -8,7 +8,7 @@ __version__ = '0.0.5'
 
 
 def GetFileLogger(folder, name):
-    logger = logging.getLogger(name)
+    logger = logging.GetFileLogger(name)
 
     if not os.path.exists(folder):
         os.makedirs(folder)
