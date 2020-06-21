@@ -26,47 +26,63 @@ with open('LICENSE') as f:
 #     python_requires='>=3.6'
 # )
 
-setup(
-    name='tdbm.logger',
-    author='MarkNo1',
-    url='https://github.com/MarkNo1-github/TournamentDiscordBot',
-    version='0.0.5',
-    license=license,
-    description='Tdbm Logger',
-    long_description=readme,
-    package_dir={'': 'src'},
-    packages=find_namespace_packages(where='src'),
-    install_requires=requirements,
-    include_package_data=True,
-    python_requires='>=3.6'
-)
+setup(name="tdbm.logger",
+      version="0.0.1",
+      package_dir={'': 'src'},
+      packages=find_namespace_packages(where='src'))
+setup(name="tdbm.data",
+      version="0.0.1",
+      package_dir={'': 'src'},
+      packages=find_namespace_packages(where='src'))
+setup(name="tdbm.bot",
+      version="0.0.1",
+      package_dir={'': 'src'},
+      packages=find_namespace_packages(where='src'))
 
-setup(
-    name='tdbm.data',
-    author='MarkNo1',
-    url='https://github.com/MarkNo1-github/TournamentDiscordBot',
-    version='0.0.5',
-    license=license,
-    description='Tdbm Data',
-    long_description=readme,
-    package_dir={'': 'src'},
-    packages=find_namespace_packages(where='src'),
-    install_requires=requirements,
-    include_package_data=True,
-    python_requires='>=3.6'
-)
 
-setup(
-    name='tdbm.bot',
-    author='MarkNo1',
-    url='https://github.com/MarkNo1-github/TournamentDiscordBot',
-    version='0.0.5',
-    license=license,
-    description='Tdbm Bot',
-    long_description=readme,
-    package_dir={'': 'src'},
-    packages=find_namespace_packages(where='src'),
-    install_requires=requirements,
-    include_package_data=True,
-    python_requires='>=3.6'
-)
+#
+#
+# setup(
+#     name='tdbm.logger',
+#     author='MarkNo1',
+#     url='https://github.com/MarkNo1-github/TournamentDiscordBot',
+#     version='0.0.5',
+#     license=license,
+#     description='Tdbm Logger',
+#     long_description=readme,
+#     package_dir={'': 'src'},
+#     packages=find_namespace_packages(where='src'),
+#     install_requires=requirements,
+#     include_package_data=True,
+#     python_requires='>=3.6'
+# )
+#
+# setup(
+#     name='tdbm.data',
+#     author='MarkNo1',
+#     url='https://github.com/MarkNo1-github/TournamentDiscordBot',
+#     version='0.0.5',
+#     license=license,
+#     description='Tdbm Data',
+#     long_description=readme,
+#     package_dir={'': 'src'},
+#     packages=find_namespace_packages(where='src'),
+#     install_requires=requirements,
+#     include_package_data=True,
+#     python_requires='>=3.6'
+# )
+#
+# setup(
+#     name='tdbm.bot',
+#     author='MarkNo1',
+#     url='https://github.com/MarkNo1-github/TournamentDiscordBot',
+#     version='0.0.5',
+#     license=license,
+#     description='Tdbm Bot',
+#     long_description=readme,
+#     package_dir={'': 'src'},
+#     packages=find_namespace_packages(where='src'),
+#     install_requires=requirements,
+#     include_package_data=True,
+#     python_requires='>=3.6'
+# )
