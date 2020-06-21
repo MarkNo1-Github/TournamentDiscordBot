@@ -3,7 +3,11 @@ from datetime import date
 import logging
 import os
 
-def GetLogger(folder, name):
+
+__version__ = '0.0.5'
+
+
+def GetFileLogger(folder, name):
     logger = logging.getLogger(name)
 
     if not os.path.exists(folder):
