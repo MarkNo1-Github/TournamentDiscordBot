@@ -13,6 +13,10 @@ class FileRaidEnum:
     file_path = lambda self, name, path : f'Path file {name}: {path}'
 
 
+def show_data(data):
+    return Success("```" + f'\n\n{tabulate(data, headers="keys", tablefmt="plain")}' + "```")
+
+
 class DataController(object):
     def __init__(self, name, dataType):
         self.__doc__ = '''
@@ -95,7 +99,7 @@ class DataManager(object):
         self.counter_id = 0
         if not self.data.empty:
             self.counter_id = self.data['id'].max()
-            
+
         self.controller.logger.debug(Success('Initialization'))
 
     def add(self, rowclass: IData):
