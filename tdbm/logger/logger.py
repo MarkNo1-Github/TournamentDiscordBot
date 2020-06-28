@@ -9,8 +9,9 @@ import os
 __version__ = '0.1.7'
 
 FORMATV2 = '''\
-(%(levelname)s) %(asctime)s - pid:%(process)d\n\t%(name)s::%(filename)s:%(lineno)s\n\t%(funcName)s: %(message)s
+(%(levelname)s) - %(process)d - %(asctime)s\n\t%(name)s::%(filename)s:%(lineno)s\n\t%(funcName)s: %(message)s
 '''
+
 FORMAT = '(%(levelname)} s%(asctime)s - pid:%(process)d\n\t%(name)s::%(filename)s:%(lineno)s\n\t%(funcName)s: %(message)s'
 
 # Every 1 Day
@@ -21,10 +22,10 @@ Error = lambda y : y
 
 
 class EnumLogger(object):
-    DEBUG = 0
-    INFO = 1
-    WARN = 2
-    ERROR = 3
+    DEBUG = 'debug'
+    INFO = 'info'
+    WARN = 'warn'
+    ERROR = 'error'
 
 
 class Logger(EnumLogger):
@@ -57,38 +58,19 @@ class Logger(EnumLogger):
         }
 
 
-    def __call__(self, level: EnumLogger, *args, **kargs):
-        if args:
-            self.callback [level] (*args)
-        if kargs:
-            self.callback [level] (kargs)
+    def __call__(self, **magic):
+        if magic:
+            for level, message in magic.items():
+                self.callback [level] (message)
 
-
-
-
-
-
-
-def GetFileLogger(folder, name):
-    import logging
-    from logging.handlers import TimedRotatingFileHandler
-    logger = logging.getLogger(name)
-
-    if not os.path.exists(folder):
-        os.makedirs(folder)
-
-    hdlr = TimedRotatingFileHandler(os.path.join(folder, f'{name}.{date.today()}.log'),  when='d', backupCount=5)
-    formatter = logging.Formatter('%(asctime)s::%(process)d::%(levelname)s::%(name)s::%(filename)s:%(lineno)s::%(funcName)s: %(message)s')
-    hdlr.setFormatter(formatter)
-    logger.addHandler(hdlr)
-    logger.setLevel(logging.DEBUG)
-    return logger
 
 
 if __name__ == '__main__':
     print("** Testing Logger Class **")
     log = Logger('test_logger')
-    log(log.DEBUG, 'debug')
-    log(log.INFO, 'info')
-    log(log.WARN, 'warn')
-    log(log.ERROR, 'error')
+    log(info="START")
+    log(debug='debug')
+    log(info='info')
+    log(warn='warn')
+    log(error='error')
+    log(info="END", debug="Called after END")
