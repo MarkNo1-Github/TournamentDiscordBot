@@ -8,17 +8,18 @@ import os
 
 __version__ = '0.1.7'
 
-FORMATV2 = '''\
-(%(levelname)s) - %(process)d - %(asctime)s\n\t%(name)s::%(filename)s:%(lineno)s\n\t%(funcName)s: %(message)s
-'''
 
-FORMAT = '(%(levelname)} s%(asctime)s - pid:%(process)d\n\t%(name)s::%(filename)s:%(lineno)s\n\t%(funcName)s: %(message)s'
+FORMAT = f'''\
+ %(process)d {'_'}%(levelname)s{'_'} %(asctime)s:%(filename)s:%(lineno)s:%(name)s:%(funcName)s
+    %(message)s'''
 
-# Every 1 Day
+
+# Every Day
 ROTATION = 'd'
 
-Success = lambda x : x
-Error = lambda y : y
+# Discord Labels
+Success = lambda x : f"**`SUCCESS`** {x}"
+Error = lambda y : f"**`ERROR`** {y}"
 
 
 class EnumLogger(object):
@@ -29,23 +30,31 @@ class EnumLogger(object):
 
 
 class Logger(EnumLogger):
-    def __init__(self, name, level=logging.DEBUG):
-        self.folder = Path(name)
+    def __init__(self, name, level=logging.DEBUG, log_file=True, log_console=True):
+        self.folder = Path(name) / 'logs'
 
         # Create Folder if not exist
         if not self.folder.exists():
             self.folder.mkdir()
 
         # File Log
-        self.file_log = Path(name) / f'{name}.{date.today()}.log'
+        self.file_log = Path(name) / f'{name}.{date.today()}'
 
         # Logger
         self.logger = logging.getLogger(name)
 
-        # Handler
-        handler = logging.handlers.TimedRotatingFileHandler(self.file_log, when= ROTATION, backupCount=5)
-        handler.setFormatter(Formatter(FORMATV2))
-        self.logger.addHandler(handler)
+
+        # File Handler
+        if log_file:
+            file_handler = logging.handlers.TimedRotatingFileHandler(self.file_log, when= ROTATION, backupCount=5)
+            file_handler.setFormatter(Formatter(FORMAT))
+            self.logger.addHandler(file_handler)
+
+        # Console Handler
+        if log_console:
+            console_handler = logging.StreamHandler()
+            console_handler.setFormatter(Formatter(FORMAT))
+            self.logger.addHandler(console_handler)
 
         # Set Level
         self.logger.setLevel(level)
@@ -66,8 +75,9 @@ class Logger(EnumLogger):
 
 
 if __name__ == '__main__':
-    print("** Testing Logger Class **")
+    log_file = 'test_logger'
     log = Logger('test_logger')
+    log(info="** Testing Logger Class **")
     log(info="START")
     log(debug='debug')
     log(info='info')

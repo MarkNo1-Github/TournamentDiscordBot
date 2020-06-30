@@ -10,7 +10,7 @@ with open('README.md') as f:
 with open('LICENSE') as f:
     license = f.read()
 
-
+MODULES = ['bot' , 'cog' , 'data', 'logger', 'manager']
 
 def get_package_name():
     return 'tdbm'
@@ -27,18 +27,20 @@ def produce_import_module(name):
 
 def produce_packages_dirs():
     packages_dirs = {get_package_name() : get_package_name()}
-    packages_dirs.update(produce_import_module('bot'))
-    packages_dirs.update(produce_import_module('data'))
-    packages_dirs.update(produce_import_module('logger'))
-    packages_dirs.update(produce_import_module('manager'))
+
+    for module in MODULES:
+        packages_dirs.update(produce_import_module(module))
+
     return packages_dirs
 
 def produce_packages():
-    return [get_package_name(),
-            produce_module_dot('manager'),
-            produce_module_dot('logger'),
-            produce_module_dot('data'),
-            produce_module_dot('bot')]
+    packages = [get_package_name()]
+
+    for module in MODULES:
+        packages.append(produce_module_dot(module))
+
+    return packages
+
 
 
 setup(
