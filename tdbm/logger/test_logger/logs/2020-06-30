@@ -1,0 +1,72 @@
+
+ 17432 _INFO_ 2020-06-30 21:34:27,856:logger.py:103:test_logger:<lambda>
+    ** Testing Logger Class **
+
+ 17432 _INFO_ 2020-06-30 21:34:27,857:logger.py:103:test_logger:<lambda>
+    START
+
+ 17432 _DEBUG_ 2020-06-30 21:34:27,857:logger.py:102:test_logger:<lambda>
+    This is an example of a level of log case of the type: debug
+
+ 17432 _INFO_ 2020-06-30 21:34:27,858:logger.py:103:test_logger:<lambda>
+    This is an example of a level of log case of the type: info
+
+ 17432 _WARNING_ 2020-06-30 21:34:27,858:logger.py:104:test_logger:<lambda>
+    This is an example of a level of log case of the type: warn
+
+ 17432 _ERROR_ 2020-06-30 21:34:27,858:logger.py:105:test_logger:<lambda>
+    This is an example of a level of log case of the type: error
+
+ 17432 _INFO_ 2020-06-30 21:34:27,858:logger.py:103:test_logger:<lambda>
+    END
+
+ 17432 _DEBUG_ 2020-06-30 21:34:27,859:logger.py:102:test_logger:<lambda>
+    Called after END
+
+ 17876 _INFO_ 2020-06-30 23:48:49,958:logger.py:98:test_logger:<lambda>
+    ** Testing Logger Class **
+
+ 17876 _INFO_ 2020-06-30 23:48:49,958:logger.py:98:test_logger:<lambda>
+    START
+
+ 17876 _DEBUG_ 2020-06-30 23:48:49,959:logger.py:97:test_logger:<lambda>
+    This is an example of a level of log case of the type: debug
+
+ 17876 _INFO_ 2020-06-30 23:48:49,959:logger.py:98:test_logger:<lambda>
+    This is an example of a level of log case of the type: info
+
+ 17876 _WARNING_ 2020-06-30 23:48:49,959:logger.py:99:test_logger:<lambda>
+    This is an example of a level of log case of the type: warn
+
+ 17876 _ERROR_ 2020-06-30 23:48:49,959:logger.py:100:test_logger:<lambda>
+    This is an example of a level of log case of the type: error
+
+ 17876 _INFO_ 2020-06-30 23:48:49,960:logger.py:98:test_logger:<lambda>
+    END
+
+ 17876 _DEBUG_ 2020-06-30 23:48:49,960:logger.py:97:test_logger:<lambda>
+    Called after END
+
+ 2668 _INFO_ 2020-06-30 23:48:54,052:logger.py:98:test_logger:<lambda>
+    ** Testing Logger Class **
+
+ 2668 _INFO_ 2020-06-30 23:48:54,052:logger.py:98:test_logger:<lambda>
+    START
+
+ 2668 _DEBUG_ 2020-06-30 23:48:54,053:logger.py:97:test_logger:<lambda>
+    This is an example of a level of log case of the type: debug
+
+ 2668 _INFO_ 2020-06-30 23:48:54,053:logger.py:98:test_logger:<lambda>
+    This is an example of a level of log case of the type: info
+
+ 2668 _WARNING_ 2020-06-30 23:48:54,054:logger.py:99:test_logger:<lambda>
+    This is an example of a level of log case of the type: warn
+
+ 2668 _ERROR_ 2020-06-30 23:48:54,054:logger.py:100:test_logger:<lambda>
+    This is an example of a level of log case of the type: error
+
+ 2668 _INFO_ 2020-06-30 23:48:54,054:logger.py:98:test_logger:<lambda>
+    END
+
+ 2668 _DEBUG_ 2020-06-30 23:48:54,054:logger.py:97:test_logger:<lambda>
+    Called after END

@@ -9,9 +9,7 @@ import os
 __version__ = '0.1.7'
 
 
-FORMAT = f'''\
- %(process)d {'_'}%(levelname)s{'_'} %(asctime)s:%(filename)s:%(lineno)s:%(name)s:%(funcName)s
-    %(message)s'''
+FORMAT = f'''%(process)d {'_'}%(levelname)s{'_'} %(asctime)s:%(name)s - %(message)s'''
 
 
 # Every Day
@@ -20,25 +18,59 @@ ROTATION = 'd'
 # Discord Labels
 Success = lambda x : f"**`SUCCESS`** {x}"
 Error = lambda y : f"**`ERROR`** {y}"
+Now = lambda : str(date.today())
+
+class Name:
+    __name__ = None
+    def __init__(self, name):
+        self.__name__ = name
+
+class Folder(Name):
+    '''
+        Folder Class
+
+    '''
+    __root_folder__ = None
+
+    def __init__(self, name):
+        super().__init__(name)
+        self.__root_folder__ = Path( name )
+        if not self.__root_folder__.exists():
+            self.__root_folder__.mkdir()
+
+class TestFolderName(Folder):
+    def __init__(self, name):
+        super().__init__(name)
+        print(self.__name__)
 
 
-class EnumLogger(object):
+class Logger(Folder):
+    '''
+        Logger Class
+
+    '''
+
     DEBUG = 'debug'
     INFO = 'info'
     WARN = 'warn'
     ERROR = 'error'
 
 
-class Logger(EnumLogger):
+    __folder__ = None
+    __file__ = None
+
     def __init__(self, name, level=logging.DEBUG, log_file=True, log_console=True):
-        self.folder = Path(name) / 'logs'
+        # Call Folder class
+        super().__init__(name)
+
+        self.__folder__ = Path(name) / 'logs'
 
         # Create Folder if not exist
-        if not self.folder.exists():
-            self.folder.mkdir()
+        if not self.__folder__.exists():
+            self.__folder__.mkdir()
 
         # File Log
-        self.file_log = Path(name) / f'{name}.{date.today()}'
+        self.__file__ = self.__folder__ / Now()
 
         # Logger
         self.logger = logging.getLogger(name)
@@ -46,7 +78,7 @@ class Logger(EnumLogger):
 
         # File Handler
         if log_file:
-            file_handler = logging.handlers.TimedRotatingFileHandler(self.file_log, when= ROTATION, backupCount=5)
+            file_handler = logging.handlers.TimedRotatingFileHandler(self.__file__, when= ROTATION, backupCount=5)
             file_handler.setFormatter(Formatter(FORMAT))
             self.logger.addHandler(file_handler)
 
@@ -56,7 +88,7 @@ class Logger(EnumLogger):
             console_handler.setFormatter(Formatter(FORMAT))
             self.logger.addHandler(console_handler)
 
-        # Set Level
+        # Set Level default DEBUG
         self.logger.setLevel(level)
 
         self.callback = {
@@ -75,12 +107,13 @@ class Logger(EnumLogger):
 
 
 if __name__ == '__main__':
-    log_file = 'test_logger'
-    log = Logger('test_logger')
+    log_folder = 'test_logger'
+    log = Logger(log_folder)
     log(info="** Testing Logger Class **")
     log(info="START")
-    log(debug='debug')
-    log(info='info')
-    log(warn='warn')
-    log(error='error')
+    log(debug='This is an example of a level of log case of the type: debug')
+    log(info='This is an example of a level of log case of the type: info')
+    log(warn='This is an example of a level of log case of the type: warn')
+    log(error='This is an example of a level of log case of the type: error')
+    log(**{'info': 'osdjfosjfosjfd'})
     log(info="END", debug="Called after END")

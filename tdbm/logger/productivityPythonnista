@@ -1,0 +1,1749 @@
+
+In [1]: from tdbm.logger import Logger
+
+In [2]: Logger.INFO
+Out[2]: 'info'
+
+In [3]: exit
+
+(discord) C:\Users\Mark\Documents\Py\Bot\git\tdbm>ipython
+Python 3.8.3 | packaged by conda-forge | (default, Jun  1 2020, 16:59:10) [MSC v.1916 64 bit (AMD64)]
+Type 'copyright', 'credits' or 'license' for more information
+IPython 7.15.0 -- An enhanced Interactive Python. Type '?' for help.
+
+In [1]: class A:
+   ...:     def __call__(self, *, **):
+   ...:         print('A')
+  File "<ipython-input-1-4c906cecafac>", line 2
+    def __call__(self, *, **):
+                            ^
+SyntaxError: invalid syntax
+
+
+In [2]:
+
+In [2]: class A:
+   ...:     def __call__(self, *a, **k):
+   ...:         print('A')
+   ...:
+
+In [3]: class B(A):
+   ...:     def __call__(self, *a, **k):
+   ...:         print('B')
+   ...:
+
+In [4]: b = B()
+
+In [5]: b()
+B
+
+In [6]: dir(b)
+Out[6]:
+['__call__',
+ '__class__',
+ '__delattr__',
+ '__dict__',
+ '__dir__',
+ '__doc__',
+ '__eq__',
+ '__format__',
+ '__ge__',
+ '__getattribute__',
+ '__gt__',
+ '__hash__',
+ '__init__',
+ '__init_subclass__',
+ '__le__',
+ '__lt__',
+ '__module__',
+ '__ne__',
+ '__new__',
+ '__reduce__',
+ '__reduce_ex__',
+ '__repr__',
+ '__setattr__',
+ '__sizeof__',
+ '__str__',
+ '__subclasshook__',
+ '__weakref__']
+
+In [7]: exit
+
+(discord) C:\Users\Mark\Documents\Py\Bot\git\tdbm>ipython
+Python 3.8.3 | packaged by conda-forge | (default, Jun  1 2020, 16:59:10) [MSC v.1916 64 bit (AMD64)]
+Type 'copyright', 'credits' or 'license' for more information
+IPython 7.15.0 -- An enhanced Interactive Python. Type '?' for help.
+
+In [1]: class A:
+   ...:     def __call__(self, *a, **k):
+   ...:         print('A')
+   ...:
+
+In [2]:
+
+In [2]: class B(A):
+   ...:     def __call__(self, *a, **k):
+   ...:         print('B')
+   ...:
+
+In [3]: b()
+---------------------------------------------------------------------------
+NameError                                 Traceback (most recent call last)
+<ipython-input-3-3bf86fc5afda> in <module>
+----> 1 b()
+
+NameError: name 'b' is not defined
+
+In [4]: b = B()
+
+In [5]: b.super().__call__()
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+<ipython-input-5-a210acf2f4d1> in <module>
+----> 1 b.super().__call__()
+
+AttributeError: 'B' object has no attribute 'super'
+
+In [6]: super(B, b).__call__()
+A
+
+In [7]: class HDFEnum(object):
+   ...:     '''
+   ...:         HDFEnum Class
+   ...:
+   ...:     '''
+   ...:     log_reading = lambda name : { Logger.DEBUG : f'Reading File {name}' }
+   ...:     log_writing = lambda name : { Logger.DEBUG : f'Writing File{name}' }
+   ...:     log_init = lambda name :  { Logger.INFO : f'Initialization File: {name}' }
+   ...:     log_file_path = lambda self, name, path :  { Logger.INFO :  f'Path file {name}: {path}'}
+   ...:     log_error = lambda name, type, val, tb :  { Logger.ERROR : f'Error File {name}: {type} {val} {tb}' }
+   ...:     log_data_to_init = lambda name : { Logger.INFO : f'File {name} is not created yet. Performing Initializatio
+   ...: n' }
+   ...:
+   ...:
+
+
+Unhandled exception in event loop:
+  File "C:\Users\Mark\miniconda3\envs\discord\lib\asyncio\proactor_events.py", line 768, in _loop_self_reading
+    f.result()  # may raise
+  File "C:\Users\Mark\miniconda3\envs\discord\lib\asyncio\windows_events.py", line 808, in _poll
+    value = callback(transferred, key, ov)
+  File "C:\Users\Mark\miniconda3\envs\discord\lib\asyncio\windows_events.py", line 457, in finish_recv
+    raise ConnectionResetError(*exc.args)
+
+Exception [WinError 995] The I/O operation has been aborted because of either a thread exit or an application request
+Press ENTER to continue...
+In [8]: class HDFEnum(object):
+   ...:     '''
+   ...:         HDFEnum Class
+   ...:
+   ...:     '''
+   ...:     log_reading = lambda name : { Logger.DEBUG : f'Reading File {name}' }
+   ...:     log_writing = lambda name : { Logger.DEBUG : f'Writing File{name}' }
+   ...:     log_init = lambda name :  { Logger.INFO : f'Initialization File: {name}' }
+   ...:     log_file_path = lambda self, name, path :  { Logger.INFO :  f'Path file {name}: {path}'}
+   ...:     log_error = lambda name, type, val, tb :  { Logger.ERROR : f'Error File {name}: {type} {val} {tb}' }
+   ...:     log_data_to_init = lambda name : { Logger.INFO : f'File {name} is not created yet. Performing Initialization' }
+   ...:
+   ...:
+
+In [9]: from tdbm.logger import Logger
+
+In [10]: class HDFData(HDFEnum, Logger):
+    ...:     '''
+    ...:     HDFData Class
+    ...:
+    ...:     '''
+    ...:     def __init__(self, name):
+    ...:         super().__init__(name)
+    ...:         self.name = name
+    ...:
+
+In [11]: a = HDFData('T')
+---------------------------------------------------------------------------
+FileNotFoundError                         Traceback (most recent call last)
+<ipython-input-11-e057a88fee9c> in <module>
+----> 1 a = HDFData('T')
+
+<ipython-input-10-95188392da01> in __init__(self, name)
+      5     '''
+      6     def __init__(self, name):
+----> 7         super().__init__(name)
+      8         self.name = name
+
+~\Documents\Py\Bot\git\tdbm\tdbm\logger\logger.py in __init__(self, name, level, log_file, log_console)
+     36         # Create Folder if not exist
+     37         if not self.folder.exists():
+---> 38             self.folder.mkdir()
+     39
+     40         # File Log
+
+~\miniconda3\envs\discord\lib\pathlib.py in mkdir(self, mode, parents, exist_ok)
+   1282             self._raise_closed()
+   1283         try:
+-> 1284             self._accessor.mkdir(self, mode)
+   1285         except FileNotFoundError:
+   1286             if not parents or self.parent == self:
+
+FileNotFoundError: [WinError 3] The system cannot find the path specified: 'T\\logs'
+
+In [12]: exit
+
+(discord) C:\Users\Mark\Documents\Py\Bot\git\tdbm>cd tdbm
+
+(discord) C:\Users\Mark\Documents\Py\Bot\git\tdbm\tdbm>cd logger
+
+(discord) C:\Users\Mark\Documents\Py\Bot\git\tdbm\tdbm\logger>ipython logger.py
+---------------------------------------------------------------------------
+FileNotFoundError                         Traceback (most recent call last)
+~\Documents\Py\Bot\git\tdbm\tdbm\logger\logger.py in <module>
+     77 if __name__ == '__main__':
+     78     log_file = 'test_logger'
+---> 79     log = Logger('test_logger')
+     80     log(info="** Testing Logger Class **")
+     81     log(info="START")
+
+~\Documents\Py\Bot\git\tdbm\tdbm\logger\logger.py in __init__(self, name, level, log_file, log_console)
+     36         # Create Folder if not exist
+     37         if not self.log_folder.exists():
+---> 38             self.log_folder.mkdir()
+     39
+     40         # File Log
+
+~\miniconda3\envs\discord\lib\pathlib.py in mkdir(self, mode, parents, exist_ok)
+   1282             self._raise_closed()
+   1283         try:
+-> 1284             self._accessor.mkdir(self, mode)
+   1285         except FileNotFoundError:
+   1286             if not parents or self.parent == self:
+
+FileNotFoundError: [WinError 3] The system cannot find the path specified: 'test_logger\\logs'
+
+(discord) C:\Users\Mark\Documents\Py\Bot\git\tdbm\tdbm\logger>python logger.py
+Traceback (most recent call last):
+  File "logger.py", line 79, in <module>
+    log = Logger('test_logger')
+  File "logger.py", line 38, in __init__
+    self.log_folder.mkdir()
+  File "C:\Users\Mark\miniconda3\envs\discord\lib\pathlib.py", line 1284, in mkdir
+    self._accessor.mkdir(self, mode)
+FileNotFoundError: [WinError 3] The system cannot find the path specified: 'test_logger\\logs'
+
+(discord) C:\Users\Mark\Documents\Py\Bot\git\tdbm\tdbm\logger>ipython
+Python 3.8.3 | packaged by conda-forge | (default, Jun  1 2020, 16:59:10) [MSC v.1916 64 bit (AMD64)]
+Type 'copyright', 'credits' or 'license' for more information
+IPython 7.15.0 -- An enhanced Interactive Python. Type '?' for help.
+
+In [1]: from pathlib import Path
+
+In [2]: a = Path('test')
+
+In [3]: a
+Out[3]: WindowsPath('test')
+
+In [4]: a \ 't'
+  File "<ipython-input-4-e70bf8da778a>", line 1
+    a \ 't'
+           ^
+SyntaxError: unexpected character after line continuation character
+
+
+In [5]: a \ "t"
+  File "<ipython-input-5-70197da29813>", line 1
+    a \ "t"
+           ^
+SyntaxError: unexpected character after line continuation character
+
+
+In [6]: a / "t"
+Out[6]: WindowsPath('test/t')
+
+In [7]: b = a / "t"
+
+In [8]: b.exists()
+Out[8]: False
+
+In [9]: b.mkdir()
+---------------------------------------------------------------------------
+FileNotFoundError                         Traceback (most recent call last)
+<ipython-input-9-5bbb2755fc65> in <module>
+----> 1 b.mkdir()
+
+~\miniconda3\envs\discord\lib\pathlib.py in mkdir(self, mode, parents, exist_ok)
+   1282             self._raise_closed()
+   1283         try:
+-> 1284             self._accessor.mkdir(self, mode)
+   1285         except FileNotFoundError:
+   1286             if not parents or self.parent == self:
+
+FileNotFoundError: [WinError 3] The system cannot find the path specified: 'test\\t'
+
+In [10]: exit
+
+(discord) C:\Users\Mark\Documents\Py\Bot\git\tdbm\tdbm\logger>python logger.py
+Traceback (most recent call last):
+  File "logger.py", line 79, in <module>
+    log = Logger('test_logger')
+  File "logger.py", line 38, in __init__
+    self.log_folder.mkdir()
+  File "C:\Users\Mark\miniconda3\envs\discord\lib\pathlib.py", line 1284, in mkdir
+    self._accessor.mkdir(self, mode)
+FileNotFoundError: [WinError 3] The system cannot find the path specified: 'test_logger\\logs'
+
+(discord) C:\Users\Mark\Documents\Py\Bot\git\tdbm\tdbm\logger>mkdir test_logger
+
+(discord) C:\Users\Mark\Documents\Py\Bot\git\tdbm\tdbm\logger>python logger.py
+ 10984 _INFO_ 2020-06-30 20:19:14,434:logger.py:64:test_logger:<lambda>
+    ** Testing Logger Class **
+ 10984 _INFO_ 2020-06-30 20:19:14,434:logger.py:64:test_logger:<lambda>
+    START
+ 10984 _DEBUG_ 2020-06-30 20:19:14,434:logger.py:63:test_logger:<lambda>
+    debug
+ 10984 _INFO_ 2020-06-30 20:19:14,435:logger.py:64:test_logger:<lambda>
+    info
+ 10984 _WARNING_ 2020-06-30 20:19:14,435:logger.py:65:test_logger:<lambda>
+    warn
+ 10984 _ERROR_ 2020-06-30 20:19:14,435:logger.py:66:test_logger:<lambda>
+    error
+ 10984 _INFO_ 2020-06-30 20:19:14,436:logger.py:64:test_logger:<lambda>
+    END
+ 10984 _DEBUG_ 2020-06-30 20:19:14,436:logger.py:63:test_logger:<lambda>
+    Called after END
+
+(discord) C:\Users\Mark\Documents\Py\Bot\git\tdbm\tdbm\logger>python logger.py
+ 2020 _INFO_ 2020-06-30 20:19:24,083:logger.py:64:test_logger:<lambda>
+    ** Testing Logger Class **
+ 2020 _INFO_ 2020-06-30 20:19:24,084:logger.py:64:test_logger:<lambda>
+    START
+ 2020 _DEBUG_ 2020-06-30 20:19:24,084:logger.py:63:test_logger:<lambda>
+    debug
+ 2020 _INFO_ 2020-06-30 20:19:24,085:logger.py:64:test_logger:<lambda>
+    info
+ 2020 _WARNING_ 2020-06-30 20:19:24,085:logger.py:65:test_logger:<lambda>
+    warn
+ 2020 _ERROR_ 2020-06-30 20:19:24,085:logger.py:66:test_logger:<lambda>
+    error
+ 2020 _INFO_ 2020-06-30 20:19:24,085:logger.py:64:test_logger:<lambda>
+    END
+ 2020 _DEBUG_ 2020-06-30 20:19:24,086:logger.py:63:test_logger:<lambda>
+    Called after END
+
+(discord) C:\Users\Mark\Documents\Py\Bot\git\tdbm\tdbm\logger>python logger.py
+ 12324 _INFO_ 2020-06-30 20:20:30,603:logger.py:64:test_logger:<lambda>
+    ** Testing Logger Class **
+ 12324 _INFO_ 2020-06-30 20:20:30,603:logger.py:64:test_logger:<lambda>
+    START
+ 12324 _DEBUG_ 2020-06-30 20:20:30,604:logger.py:63:test_logger:<lambda>
+    This is an example of a level of log case of the type: debug
+ 12324 _INFO_ 2020-06-30 20:20:30,604:logger.py:64:test_logger:<lambda>
+    This is an example of a level of log case of the type: info
+ 12324 _WARNING_ 2020-06-30 20:20:30,604:logger.py:65:test_logger:<lambda>
+    This is an example of a level of log case of the type: warn
+ 12324 _ERROR_ 2020-06-30 20:20:30,605:logger.py:66:test_logger:<lambda>
+    This is an example of a level of log case of the type: error
+ 12324 _INFO_ 2020-06-30 20:20:30,605:logger.py:64:test_logger:<lambda>
+    END
+ 12324 _DEBUG_ 2020-06-30 20:20:30,605:logger.py:63:test_logger:<lambda>
+    Called after END
+
+(discord) C:\Users\Mark\Documents\Py\Bot\git\tdbm\tdbm\logger>python logger.py
+
+ 8684 _INFO_ 2020-06-30 20:21:15,293:logger.py:64:test_logger:<lambda>
+    ** Testing Logger Class **
+
+ 8684 _INFO_ 2020-06-30 20:21:15,293:logger.py:64:test_logger:<lambda>
+    START
+
+ 8684 _DEBUG_ 2020-06-30 20:21:15,294:logger.py:63:test_logger:<lambda>
+    This is an example of a level of log case of the type: debug
+
+ 8684 _INFO_ 2020-06-30 20:21:15,294:logger.py:64:test_logger:<lambda>
+    This is an example of a level of log case of the type: info
+
+ 8684 _WARNING_ 2020-06-30 20:21:15,294:logger.py:65:test_logger:<lambda>
+    This is an example of a level of log case of the type: warn
+
+ 8684 _ERROR_ 2020-06-30 20:21:15,295:logger.py:66:test_logger:<lambda>
+    This is an example of a level of log case of the type: error
+
+ 8684 _INFO_ 2020-06-30 20:21:15,295:logger.py:64:test_logger:<lambda>
+    END
+
+ 8684 _DEBUG_ 2020-06-30 20:21:15,295:logger.py:63:test_logger:<lambda>
+    Called after END
+
+(discord) C:\Users\Mark\Documents\Py\Bot\git\tdbm\tdbm\logger>python logger.py
+Traceback (most recent call last):
+  File "logger.py", line 104, in <module>
+    log = Logger('test_logger')
+  File "logger.py", line 57, in __init__
+    super().__init__(name)
+  File "logger.py", line 33, in __init__
+    if not self.root_folder.exist():
+AttributeError: 'WindowsPath' object has no attribute 'exist'
+
+(discord) C:\Users\Mark\Documents\Py\Bot\git\tdbm\tdbm\logger>python logger.py
+
+ 14860 _INFO_ 2020-06-30 20:26:49,350:logger.py:89:test_logger:<lambda>
+    ** Testing Logger Class **
+
+ 14860 _INFO_ 2020-06-30 20:26:49,350:logger.py:89:test_logger:<lambda>
+    START
+
+ 14860 _DEBUG_ 2020-06-30 20:26:49,351:logger.py:88:test_logger:<lambda>
+    This is an example of a level of log case of the type: debug
+
+ 14860 _INFO_ 2020-06-30 20:26:49,351:logger.py:89:test_logger:<lambda>
+    This is an example of a level of log case of the type: info
+
+ 14860 _WARNING_ 2020-06-30 20:26:49,351:logger.py:90:test_logger:<lambda>
+    This is an example of a level of log case of the type: warn
+
+ 14860 _ERROR_ 2020-06-30 20:26:49,351:logger.py:91:test_logger:<lambda>
+    This is an example of a level of log case of the type: error
+
+ 14860 _INFO_ 2020-06-30 20:26:49,352:logger.py:89:test_logger:<lambda>
+    END
+
+ 14860 _DEBUG_ 2020-06-30 20:26:49,352:logger.py:88:test_logger:<lambda>
+    Called after END
+
+(discord) C:\Users\Mark\Documents\Py\Bot\git\tdbm\tdbm\logger>python logger.py
+Traceback (most recent call last):
+  File "logger.py", line 104, in <module>
+    log = Logger(log_folder)
+  File "logger.py", line 66, in __init__
+    self.log_file = Path(name) / date.today()
+TypeError: unsupported operand type(s) for /: 'WindowsPath' and 'datetime.date'
+
+(discord) C:\Users\Mark\Documents\Py\Bot\git\tdbm\tdbm\logger>python logger.py
+
+ 5588 _INFO_ 2020-06-30 20:29:10,277:logger.py:89:test_logger:<lambda>
+    ** Testing Logger Class **
+
+ 5588 _INFO_ 2020-06-30 20:29:10,278:logger.py:89:test_logger:<lambda>
+    START
+
+ 5588 _DEBUG_ 2020-06-30 20:29:10,278:logger.py:88:test_logger:<lambda>
+    This is an example of a level of log case of the type: debug
+
+ 5588 _INFO_ 2020-06-30 20:29:10,279:logger.py:89:test_logger:<lambda>
+    This is an example of a level of log case of the type: info
+
+ 5588 _WARNING_ 2020-06-30 20:29:10,279:logger.py:90:test_logger:<lambda>
+    This is an example of a level of log case of the type: warn
+
+ 5588 _ERROR_ 2020-06-30 20:29:10,279:logger.py:91:test_logger:<lambda>
+    This is an example of a level of log case of the type: error
+
+ 5588 _INFO_ 2020-06-30 20:29:10,279:logger.py:89:test_logger:<lambda>
+    END
+
+ 5588 _DEBUG_ 2020-06-30 20:29:10,280:logger.py:88:test_logger:<lambda>
+    Called after END
+
+(discord) C:\Users\Mark\Documents\Py\Bot\git\tdbm\tdbm\logger>python logger.py
+
+ 13032 _INFO_ 2020-06-30 20:29:42,348:logger.py:89:test_logger:<lambda>
+    ** Testing Logger Class **
+
+ 13032 _INFO_ 2020-06-30 20:29:42,349:logger.py:89:test_logger:<lambda>
+    START
+
+ 13032 _DEBUG_ 2020-06-30 20:29:42,349:logger.py:88:test_logger:<lambda>
+    This is an example of a level of log case of the type: debug
+
+ 13032 _INFO_ 2020-06-30 20:29:42,350:logger.py:89:test_logger:<lambda>
+    This is an example of a level of log case of the type: info
+
+ 13032 _WARNING_ 2020-06-30 20:29:42,350:logger.py:90:test_logger:<lambda>
+    This is an example of a level of log case of the type: warn
+
+ 13032 _ERROR_ 2020-06-30 20:29:42,350:logger.py:91:test_logger:<lambda>
+    This is an example of a level of log case of the type: error
+
+ 13032 _INFO_ 2020-06-30 20:29:42,350:logger.py:89:test_logger:<lambda>
+    END
+
+ 13032 _DEBUG_ 2020-06-30 20:29:42,351:logger.py:88:test_logger:<lambda>
+    Called after END
+
+(discord) C:\Users\Mark\Documents\Py\Bot\git\tdbm\tdbm\logger>ipython
+Python 3.8.3 | packaged by conda-forge | (default, Jun  1 2020, 16:59:10) [MSC v.1916 64 bit (AMD64)]
+Type 'copyright', 'credits' or 'license' for more information
+IPython 7.15.0 -- An enhanced Interactive Python. Type '?' for help.
+
+In [1]: class A:
+   ...:     def __init__(self):
+   ...:         print('Constr')
+   ...:     def __enter__(self):
+   ...:         print('Enter')
+   ...:
+   ...:
+
+In [2]: a = A()
+Constr
+
+In [3]: a
+Out[3]: <__main__.A at 0x18c8b9e8040>
+
+In [4]: a()
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+<ipython-input-4-8d7b4527e81d> in <module>
+----> 1 a()
+
+TypeError: 'A' object is not callable
+
+In [5]: class A:
+   ...:     def __init__(self):
+   ...:         print('Constr')
+   ...:     def __enter__(self):
+   ...:         print('Enter')
+   ...:     def __call__(self):
+   ...:         print('__call__')
+   ...:
+   ...:
+
+In [6]: a = A()
+Constr
+
+In [7]: a()
+__call__
+
+In [8]: a
+Out[8]: <__main__.A at 0x18c8babfb50>
+
+In [9]: exit
+
+(discord) C:\Users\Mark\Documents\Py\Bot\git\tdbm\tdbm\logger>ipython
+Python 3.8.3 | packaged by conda-forge | (default, Jun  1 2020, 16:59:10) [MSC v.1916 64 bit (AMD64)]
+Type 'copyright', 'credits' or 'license' for more information
+IPython 7.15.0 -- An enhanced Interactive Python. Type '?' for help.
+
+In [1]: class A:
+   ...:     def __init__(self):
+   ...:         a = 1
+   ...:         print('Constr')
+   ...:     def __enter__(self):
+   ...:         print('Enter')
+   ...:     def __call__(self):
+   ...:         print('__call__')
+   ...:
+
+In [2]: class A:
+   ...:     def __init__(self):
+   ...:         self.a = 1
+   ...:         print('Constr')
+   ...:     def __enter__(self):
+   ...:         print('Enter')
+   ...:     def __call__(self):
+   ...:         print('__call__')
+   ...:
+
+In [3]: class B(A):
+   ...:     def __call__(self, *a, **k):
+   ...:         print('B')
+   ...:         self.a=2
+   ...:
+
+In [4]: b = B()
+Constr
+
+In [5]: b.a
+Out[5]: 1
+
+In [6]: b()
+B
+
+In [7]: b.a
+Out[7]: 2
+
+In [8]: super(B, b).a
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+<ipython-input-8-73952815ac06> in <module>
+----> 1 super(B, b).a
+
+AttributeError: 'super' object has no attribute 'a'
+
+In [9]: class IData:
+   ...:     def __init__(self, **kw):
+   ...:         self.__dict__ = kw
+   ...:         self.__dict__.update({'created':date.today()})
+   ...:
+   ...:     def __str__(self):
+   ...:         return str(self.__dict__)
+   ...:
+
+In [10]: IData().__dict__
+---------------------------------------------------------------------------
+NameError                                 Traceback (most recent call last)
+<ipython-input-10-c330384ea8c3> in <module>
+----> 1 IData().__dict__
+
+<ipython-input-9-9c14003e5baf> in __init__(self, **kw)
+      2     def __init__(self, **kw):
+      3         self.__dict__ = kw
+----> 4         self.__dict__.update({'created':date.today()})
+      5
+      6     def __str__(self):
+
+NameError: name 'date' is not defined
+
+In [11]: class LoggerAccessCounters:
+    ...:         '''
+    ...:             HDFAccessCounters Class
+    ...:
+    ...:         '''
+    ...:         init_time = 0
+    ...:         write_times = 0
+    ...:         error_times = 0
+    ...:
+
+In [12]: exit
+
+(discord) C:\Users\Mark\Documents\Py\Bot\git\tdbm\tdbm\logger>ipython
+Python 3.8.3 | packaged by conda-forge | (default, Jun  1 2020, 16:59:10) [MSC v.1916 64 bit (AMD64)]
+Type 'copyright', 'credits' or 'license' for more information
+IPython 7.15.0 -- An enhanced Interactive Python. Type '?' for help.
+In [1]: class A:
+   ...:     def __init__(self):
+   ...:         self.a = 1
+   ...:         print('Constr')
+   ...:     def __enter__(self):
+   ...:         print('Enter')
+   ...:     def __call__(self):
+   ...:         print('__call__')
+   ...:
+
+In [2]: class B(A):
+   ...:     def __call__(self, *a, **k):
+   ...:         print('B')
+   ...:         self.a=2
+   ...:
+
+In [3]: class A:
+   ...:     def __init__(self):
+   ...:         self.a = 1
+   ...:         print('Constr')
+   ...:     def __enter__(self):
+   ...:         print('Enter')
+   ...:     def __call__(self):
+   ...:         print('__call__')
+   ...:     def print_a(self):
+   ...:         print('A.a:',self.a)
+   ...:
+
+In [4]: class B(A):
+   ...:     def __call__(self, *a, **k):
+   ...:         print('B')
+   ...:         self.a=2
+   ...:     def print_a(self):
+   ...:         print('B.a:',self.a)
+   ...:
+
+In [5]: b = B()
+Constr
+
+In [6]: b.print_a()
+B.a: 1
+
+In [7]: super(B,b).print_a()
+A.a: 1
+
+In [8]: class A:
+   ...:     def __init__(self):
+   ...:         self._a = 1
+   ...:         print('Constr')
+   ...:     def __enter__(self):
+   ...:         print('Enter')
+   ...:     def __call__(self):
+   ...:         print('__call__')
+   ...:     def print_a(self):
+   ...:         print('A.a:',self._a)
+   ...:
+   ...:
+
+In [9]: class B(A):
+   ...:     def __call__(self, *a, **k):
+   ...:         print('B')
+   ...:         self._a=2
+   ...:     def print_a(self):
+   ...:         print('B.a:',self._a)
+   ...:
+   ...:
+
+In [10]: a = A()
+Constr
+
+In [11]: a.print_a()
+A.a: 1
+
+In [12]: b = B()
+Constr
+
+In [13]: b.print_a()
+B.a: 1
+
+In [14]: class B(A):
+    ...:     def __call__(self, *a, **k):
+    ...:         super().__init__(a,k)
+    ...:         print('Constr B')
+    ...:         self._a=2
+    ...:     def print_a(self):
+    ...:         print('B.a:',self._a)
+    ...:
+    ...:
+
+In [15]: class A:
+    ...:     def __init__(self):
+    ...:         self._a = 1
+    ...:         print('Constr A')
+    ...:     def __enter__(self):
+    ...:         print('Enter')
+    ...:     def __call__(self):
+    ...:         print('__call__')
+    ...:     def print_a(self):
+    ...:         print('A.a:',self._a)
+    ...:
+    ...:
+
+In [16]: class B(A):
+    ...:     def __call__(self, *a, **k):
+    ...:         super().__init__(a,k)
+    ...:         print('Constr B')
+    ...:         self._a=2
+    ...:     def print_a(self):
+    ...:         print('B.a:',self._a)
+    ...:
+    ...:
+
+In [17]: b = B()
+Constr A
+
+In [18]: class B(A):
+    ...:     def __init__(self, *a, **k):
+    ...:         super().__init__(a,k)
+    ...:         print('Constr B')
+    ...:         self._a=2
+    ...:     def print_a(self):
+    ...:         print('B.a:',self._a)
+    ...:
+    ...:
+
+In [19]: class B(A):
+    ...:     def __init__(self):
+    ...:         super().__init__()
+    ...:         print('Constr B')
+    ...:         self._a=2
+    ...:     def print_a(self):
+    ...:         print('B.a:',self._a)
+    ...:
+    ...:
+In [20]: b = B()
+Constr A
+Constr B
+
+In [21]: b.print_a()
+B.a: 2
+
+In [22]: super(B, b).print_a()
+A.a: 2
+
+In [23]: class B(A):
+    ...:     def __init__(self):
+    ...:         super().__init__()
+    ...:         print('Constr B')
+    ...:         self.__a=2
+    ...:     def print_a(self):
+    ...:         print('B.a:',self._a)
+    ...:
+    ...:
+
+
+Unhandled exception in event loop:
+  File "C:\Users\Mark\miniconda3\envs\discord\lib\asyncio\proactor_events.py", line 768, in _loop_self_reading
+    f.result()  # may raise
+  File "C:\Users\Mark\miniconda3\envs\discord\lib\asyncio\windows_events.py", line 808, in _poll
+    value = callback(transferred, key, ov)
+  File "C:\Users\Mark\miniconda3\envs\discord\lib\asyncio\windows_events.py", line 457, in finish_recv
+    raise ConnectionResetError(*exc.args)
+
+Exception [WinError 995] The I/O operation has been aborted because of either a thread exit or an application request
+Press ENTER to continue...
+In [24]: class A:
+    ...:     def __init__(self):
+    ...:         self.__a = 1
+    ...:         print('Constr A')
+    ...:     def __enter__(self):
+    ...:         print('Enter')
+    ...:     def __call__(self):
+    ...:         print('__call__')
+    ...:     def print_a(self):
+    ...:         print('A.a:',self._a)
+    ...:
+    ...:
+
+In [25]: class B(A):
+    ...:     def __init__(self):
+    ...:         super().__init__()
+    ...:         print('Constr B')
+    ...:         self.__a=2
+    ...:     def print_a(self):
+    ...:         print('B.a:',self._a)
+    ...:
+    ...:
+
+In [26]: a = A()
+Constr A
+
+In [27]: b = B()
+Constr A
+Constr B
+
+In [28]: b.__a
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+<ipython-input-28-dfa02baec19c> in <module>
+----> 1 b.__a
+
+AttributeError: 'B' object has no attribute '__a'
+
+In [29]: b.print_a()
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+<ipython-input-29-69330560e8f6> in <module>
+----> 1 b.print_a()
+
+<ipython-input-25-c2b80d68578d> in print_a(self)
+      5         self.__a=2
+      6     def print_a(self):
+----> 7         print('B.a:',self._a)
+      8
+      9
+
+AttributeError: 'B' object has no attribute '_a'
+
+In [30]: class B(A):
+    ...:     def __init__(self):
+    ...:         super().__init__()
+    ...:         print('Constr B')
+    ...:         self.__a=2
+    ...:     def print_a(self):
+    ...:         print('B.a:',self.__a)
+    ...:
+    ...:
+
+
+Unhandled exception in event loop:
+  File "C:\Users\Mark\miniconda3\envs\discord\lib\asyncio\proactor_events.py", line 768, in _loop_self_reading
+    f.result()  # may raise
+  File "C:\Users\Mark\miniconda3\envs\discord\lib\asyncio\windows_events.py", line 808, in _poll
+    value = callback(transferred, key, ov)
+  File "C:\Users\Mark\miniconda3\envs\discord\lib\asyncio\windows_events.py", line 457, in finish_recv
+    raise ConnectionResetError(*exc.args)
+
+Exception [WinError 995] The I/O operation has been aborted because of either a thread exit or an application request
+Press ENTER to continue...
+In [31]: class A:
+    ...:     def __init__(self):
+    ...:         self.__a = 1
+    ...:         print('Constr A')
+    ...:     def __enter__(self):
+    ...:         print('Enter')
+    ...:     def __call__(self):
+    ...:         print('__call__')
+    ...:     def print_a(self):
+    ...:         print('A.a:',self.__a)
+    ...:
+    ...:
+    ...:
+
+In [32]: class B(A):
+    ...:     def __init__(self):
+    ...:         super().__init__()
+    ...:         print('Constr B')
+    ...:         self.__a=2
+    ...:     def print_a(self):
+    ...:         print('B.a:',self.__a)
+    ...:
+    ...:
+
+In [33]: b = B()
+Constr A
+Constr B
+
+In [34]: b.__a
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+<ipython-input-34-dfa02baec19c> in <module>
+----> 1 b.__a
+
+AttributeError: 'B' object has no attribute '__a'
+
+In [35]: b.print_a()
+B.a: 2
+
+In [36]: super(B, b).print_a()
+A.a: 1
+
+In [37]: dir(b)
+Out[37]:
+['_A__a',
+ '_B__a',
+ '__call__',
+ '__class__',
+ '__delattr__',
+ '__dict__',
+ '__dir__',
+ '__doc__',
+ '__enter__',
+ '__eq__',
+ '__format__',
+ '__ge__',
+ '__getattribute__',
+ '__gt__',
+ '__hash__',
+ '__init__',
+ '__init_subclass__',
+ '__le__',
+ '__lt__',
+ '__module__',
+ '__ne__',
+ '__new__',
+ '__reduce__',
+ '__reduce_ex__',
+ '__repr__',
+ '__setattr__',
+ '__sizeof__',
+ '__str__',
+ '__subclasshook__',
+ '__weakref__',
+ 'print_a']
+
+In [38]: start cmd
+  File "<ipython-input-38-1607f4899675>", line 1
+    start cmd
+          ^
+SyntaxError: invalid syntax
+
+
+In [39]: {}
+Out[39]: {}
+
+In [40]: {'a' if 1==1 else 'b' : 1}
+Out[40]: {'a': 1}
+
+In [41]: class T:
+    ...:     __test__ = lambda x: print(x)
+    ...:     __test2__ = __test__('WOw')
+    ...:
+WOw
+
+In [42]: t = T()
+
+In [43]: t
+Out[43]: <__main__.T at 0x201cdd83ac0>
+
+In [44]: T
+Out[44]: __main__.T
+
+In [45]: t.__test__
+Out[45]: <bound method T.<lambda> of <__main__.T object at 0x00000201CDD83AC0>>
+
+In [46]: t.__test__()
+<__main__.T object at 0x00000201CDD83AC0>
+
+In [47]: t.__test__('a')
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+<ipython-input-47-99be6ac77f91> in <module>
+----> 1 t.__test__('a')
+
+TypeError: <lambda>() takes 1 positional argument but 2 were given
+
+In [48]: t.__test__(t, 'a')
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+<ipython-input-48-95ee94370689> in <module>
+----> 1 t.__test__(t, 'a')
+
+TypeError: <lambda>() takes 1 positional argument but 3 were given
+
+In [49]: t.__test__('a')
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+<ipython-input-49-99be6ac77f91> in <module>
+----> 1 t.__test__('a')
+
+TypeError: <lambda>() takes 1 positional argument but 2 were given
+
+In [50]: t.__test__()
+<__main__.T object at 0x00000201CDD83AC0>
+
+In [51]: class T:
+    ...:     __test__ = lambda x, y: print('X:',x, 'Y:', y)
+    ...:
+    ...:
+
+In [52]: t = T()
+
+In [53]: t
+Out[53]: <__main__.T at 0x201cdc9b940>
+
+In [54]: t.__test__()
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+<ipython-input-54-9d76685937aa> in <module>
+----> 1 t.__test__()
+
+TypeError: <lambda>() missing 1 required positional argument: 'y'
+
+In [55]: t.__test__(1)
+X: <__main__.T object at 0x00000201CDC9B940> Y: 1
+
+In [56]: class T:
+    ...:     __test__ = lambda _, x, y: print('X:',x, 'Y:', y)
+    ...:
+    ...:
+    ...:
+
+In [57]: t = T()
+
+In [58]: t
+Out[58]: <__main__.T at 0x201cea3b970>
+
+In [59]: t.__test__(1,2)
+X: 1 Y: 2
+
+In [60]: class T:
+    ...:     __test__ = lambda me, x, y: print('X:',x, 'Y:', y, 'Me:',type(me))
+    ...:
+    ...:
+    ...:
+    ...:
+
+In [61]: t = T()
+
+In [62]: t.__test__(1,2)
+X: 1 Y: 2 Me: <class '__main__.T'>
+
+In [63]: class T2(T):
+    ...:     __test2__ = lambda me, x, y: __test__(me,x,y)
+    ...:
+    ...:
+    ...:
+    ...:
+
+In [64]: a = T2()
+
+In [65]: a.__test2__
+Out[65]: <bound method T2.<lambda> of <__main__.T2 object at 0x00000201CEAA9E50>>
+
+In [66]: a.__test2__()
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+<ipython-input-66-655573b21dbf> in <module>
+----> 1 a.__test2__()
+
+TypeError: <lambda>() missing 2 required positional arguments: 'x' and 'y'
+
+In [67]: a.__test2__(1,2)
+---------------------------------------------------------------------------
+NameError                                 Traceback (most recent call last)
+<ipython-input-67-82d00250fdd3> in <module>
+----> 1 a.__test2__(1,2)
+
+<ipython-input-63-1c17aad8dd7d> in <lambda>(me, x, y)
+      1 class T2(T):
+----> 2     __test2__ = lambda me, x, y: __test__(me,x,y)
+      3
+      4
+      5
+
+NameError: name '__test__' is not defined
+
+In [68]: class T2(T):
+    ...:     __test2__ = lambda me, x, y: super().__test__(me,x,y)
+    ...:
+    ...:
+    ...:
+    ...:
+
+In [69]:
+
+In [69]: a = T2()
+
+In [70]: a.__test2__(1,2)
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+<ipython-input-70-82d00250fdd3> in <module>
+----> 1 a.__test2__(1,2)
+
+<ipython-input-68-ffee179ce144> in <lambda>(me, x, y)
+      1 class T2(T):
+----> 2     __test2__ = lambda me, x, y: super().__test__(me,x,y)
+      3
+      4
+      5
+
+TypeError: <lambda>() takes 3 positional arguments but 4 were given
+
+In [71]: a.__test2__()
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+<ipython-input-71-655573b21dbf> in <module>
+----> 1 a.__test2__()
+
+TypeError: <lambda>() missing 2 required positional arguments: 'x' and 'y'
+
+In [72]: a.__test2__(1)
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+<ipython-input-72-10949ae0e330> in <module>
+----> 1 a.__test2__(1)
+
+TypeError: <lambda>() missing 1 required positional argument: 'y'
+
+In [73]: a.__test2__(1,2)
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+<ipython-input-73-82d00250fdd3> in <module>
+----> 1 a.__test2__(1,2)
+
+<ipython-input-68-ffee179ce144> in <lambda>(me, x, y)
+      1 class T2(T):
+----> 2     __test2__ = lambda me, x, y: super().__test__(me,x,y)
+      3
+      4
+      5
+
+TypeError: <lambda>() takes 3 positional arguments but 4 were given
+
+In [74]: class T2(T):
+    ...:     __test2__ = lambda me, x, y: super().__test__(x,y)
+    ...:
+    ...:
+    ...:
+    ...:
+    ...:
+
+In [75]: t2 =T2()
+
+In [76]: t2.__test2__(1,2)
+X: 1 Y: 2 Me: <class '__main__.T2'>
+
+In [77]: class T2(T):
+    ...:     __test2__ = lambda me, x, y: super().__test__(x,y)
+    ...:     a = 1
+    ...:
+    ...:
+    ...:
+    ...:
+    ...:
+
+In [78]: class T:
+    ...:     __test__ = lambda me, x, y: print('X:',x, 'Y:', y, 'Me:',type(me), 'a:', me.a)
+    ...:
+    ...:
+    ...:
+    ...:
+    ...:
+
+In [79]: class T2(T):
+    ...:     a = 1
+    ...:     __test2__ = lambda me, x, y: super().__test__(x,y)
+    ...:
+    ...:
+    ...:
+    ...:
+    ...:
+    ...:
+
+In [80]: t2 =T2()
+
+In [81]: t2.__test2__(1,2)
+X: 1 Y: 2 Me: <class '__main__.T2'> a: 1
+
+In [82]:  d = object()
+
+In [83]: dir(d)
+Out[83]:
+['__class__',
+ '__delattr__',
+ '__dir__',
+ '__doc__',
+ '__eq__',
+ '__format__',
+ '__ge__',
+ '__getattribute__',
+ '__gt__',
+ '__hash__',
+ '__init__',
+ '__init_subclass__',
+ '__le__',
+ '__lt__',
+ '__ne__',
+ '__new__',
+ '__reduce__',
+ '__reduce_ex__',
+ '__repr__',
+ '__setattr__',
+ '__sizeof__',
+ '__str__',
+ '__subclasshook__']
+
+In [84]:  class A:
+    ...:     pass
+    ...:
+
+In [85]: a = A()
+
+In [86]: dir(a)
+Out[86]:
+['__class__',
+ '__delattr__',
+ '__dict__',
+ '__dir__',
+ '__doc__',
+ '__eq__',
+ '__format__',
+ '__ge__',
+ '__getattribute__',
+ '__gt__',
+ '__hash__',
+ '__init__',
+ '__init_subclass__',
+ '__le__',
+ '__lt__',
+ '__module__',
+ '__ne__',
+ '__new__',
+ '__reduce__',
+ '__reduce_ex__',
+ '__repr__',
+ '__setattr__',
+ '__sizeof__',
+ '__str__',
+ '__subclasshook__',
+ '__weakref__']
+
+In [87]:  class A:
+    ...:     def __init__(self):
+    ...:        __a__ = True
+    ...:
+    ...:
+
+In [88]: class B:
+    ...:     def __init__(self):
+    ...:         super().init__()
+    ...:         print(self.__a__)
+    ...:
+
+In [89]: b = B()
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+<ipython-input-89-bb7a6e918aa7> in <module>
+----> 1 b = B()
+
+<ipython-input-88-6a512d2c40ba> in __init__(self)
+      1 class B:
+      2     def __init__(self):
+----> 3         super().init__()
+      4         print(self.__a__)
+      5
+
+AttributeError: 'super' object has no attribute 'init__'
+
+In [90]: class B:
+    ...:     def __init__(self):
+    ...:         super().__init__()
+    ...:         print(self.__a__)
+    ...:
+    ...:
+
+In [91]: b = B()
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+<ipython-input-91-bb7a6e918aa7> in <module>
+----> 1 b = B()
+
+<ipython-input-90-09f7df2ea5eb> in __init__(self)
+      2     def __init__(self):
+      3         super().__init__()
+----> 4         print(self.__a__)
+      5
+      6
+
+AttributeError: 'B' object has no attribute '__a__'
+
+In [92]: class B:
+    ...:     def __init__(self):
+    ...:         super().__init__()
+    ...:         print(super().__a__)
+    ...:
+    ...:
+    ...:
+
+In [93]: b = b()
+__call__
+
+In [94]: b = B()
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+<ipython-input-94-36e029821653> in <module>
+----> 1 b = B()
+
+<ipython-input-92-74af6bc8f260> in __init__(self)
+      2     def __init__(self):
+      3         super().__init__()
+----> 4         print(super().__a__)
+      5
+      6
+
+AttributeError: 'super' object has no attribute '__a__'
+
+In [95]: dir(b)
+Out[95]:
+['__bool__',
+ '__class__',
+ '__delattr__',
+ '__dir__',
+ '__doc__',
+ '__eq__',
+ '__format__',
+ '__ge__',
+ '__getattribute__',
+ '__gt__',
+ '__hash__',
+ '__init__',
+ '__init_subclass__',
+ '__le__',
+ '__lt__',
+ '__ne__',
+ '__new__',
+ '__reduce__',
+ '__reduce_ex__',
+ '__repr__',
+ '__setattr__',
+ '__sizeof__',
+ '__str__',
+ '__subclasshook__']
+
+In [96]:  class A:
+    ...:     def __init__(self):
+    ...:        __a__ = True
+    ...:     def __get_name__(self):
+    ...:        return a
+    ...:
+    ...:
+
+In [97]: class B:
+    ...:     def __init__(self):
+    ...:         super().__init__()
+    ...:         print(super().__get_name__())
+    ...:
+    ...:
+    ...:
+    ...:
+
+In [98]: b = B()
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+<ipython-input-98-bb7a6e918aa7> in <module>
+----> 1 b = B()
+
+<ipython-input-97-694168169499> in __init__(self)
+      2     def __init__(self):
+      3         super().__init__()
+----> 4         print(super().__get_name__())
+      5
+      6
+
+AttributeError: 'super' object has no attribute '__get_name__'
+
+In [99]:  class A:
+    ...:     def __init__(self):
+    ...:        _a_ = True
+    ...:     def _get_name_(self):
+    ...:        return a
+    ...:
+    ...:
+    ...:
+
+In [100]: class B:
+     ...:     def __init__(self):
+     ...:         super().__init__()
+     ...:         print(super()._get_name_())
+     ...:
+     ...:
+     ...:
+     ...:
+     ...:
+
+In [101]: b = B()
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+<ipython-input-101-bb7a6e918aa7> in <module>
+----> 1 b = B()
+
+<ipython-input-100-da608f7c86fa> in __init__(self)
+      2     def __init__(self):
+      3         super().__init__()
+----> 4         print(super()._get_name_())
+      5
+      6
+
+AttributeError: 'super' object has no attribute '_get_name_'
+
+In [102]:  class A:
+     ...:     def __init__(self):
+     ...:        __a__ = True
+     ...:
+     ...:
+
+In [103]: class B(A):
+     ...:     def __init__(self):
+     ...:         super().__init__()
+     ...:         print(super()._get_name_())
+     ...:
+     ...:
+     ...:
+     ...:
+     ...:
+
+In [104]: class B(A):
+     ...:     def __init__(self):
+     ...:         super().__init__()
+     ...:         print(super()._a_())
+     ...:
+     ...:
+     ...:
+     ...:
+     ...:
+     ...:
+
+In [105]: class B(A):
+     ...:     def __init__(self):
+     ...:         super().__init__()
+     ...:         print(super()._a_)
+     ...:
+     ...:
+     ...:
+     ...:
+     ...:
+     ...:
+     ...:
+
+
+Unhandled exception in event loop:
+  File "C:\Users\Mark\miniconda3\envs\discord\lib\asyncio\proactor_events.py", line 768, in _loop_self_reading
+    f.result()  # may raise
+  File "C:\Users\Mark\miniconda3\envs\discord\lib\asyncio\windows_events.py", line 808, in _poll
+    value = callback(transferred, key, ov)
+  File "C:\Users\Mark\miniconda3\envs\discord\lib\asyncio\windows_events.py", line 457, in finish_recv
+    raise ConnectionResetError(*exc.args)
+
+Exception [WinError 995] The I/O operation has been aborted because of either a thread exit or an application request
+Press ENTER to continue...
+In [106]: b = B()
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+<ipython-input-106-bb7a6e918aa7> in <module>
+----> 1 b = B()
+
+<ipython-input-105-2bce241ef6b4> in __init__(self)
+      2     def __init__(self):
+      3         super().__init__()
+----> 4         print(super()._a_)
+      5
+      6
+
+AttributeError: 'super' object has no attribute '_a_'
+
+In [107]: class B(A):
+     ...:     def __init__(self):
+     ...:         super().__init__()
+     ...:         print(super().__a__)
+     ...:
+     ...:
+     ...:
+     ...:
+     ...:
+     ...:
+     ...:
+     ...:
+
+
+Unhandled exception in event loop:
+  File "C:\Users\Mark\miniconda3\envs\discord\lib\asyncio\proactor_events.py", line 768, in _loop_self_reading
+    f.result()  # may raise
+  File "C:\Users\Mark\miniconda3\envs\discord\lib\asyncio\windows_events.py", line 808, in _poll
+    value = callback(transferred, key, ov)
+  File "C:\Users\Mark\miniconda3\envs\discord\lib\asyncio\windows_events.py", line 457, in finish_recv
+    raise ConnectionResetError(*exc.args)
+
+Exception [WinError 995] The I/O operation has been aborted because of either a thread exit or an application request
+Press ENTER to continue...
+In [108]: class B(A):
+     ...:     def __init__(self):
+     ...:         super().__init__()
+     ...:         print(super().__a__)
+     ...:
+     ...:
+     ...:
+     ...:
+     ...:
+     ...:
+     ...:
+     ...:
+
+In [109]: b = B()
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+<ipython-input-109-bb7a6e918aa7> in <module>
+----> 1 b = B()
+
+<ipython-input-108-8e341d6f823a> in __init__(self)
+      2     def __init__(self):
+      3         super().__init__()
+----> 4         print(super().__a__)
+      5
+      6
+
+AttributeError: 'super' object has no attribute '__a__'
+
+In [110]:  class A:
+     ...:     def __init__(self):
+     ...:        _a_ = True
+     ...:     def _get_name_(self):
+     ...:        return a
+     ...:
+     ...:
+     ...:
+
+In [111]:  class A:
+     ...:     def __init__(self):
+     ...:       __a__ = True
+     ...:     def __get_name__(self):
+     ...:        return a
+     ...:
+     ...:
+     ...:
+     ...:
+
+In [112]: class B(A):
+     ...:     def __init__(self):
+     ...:         super().__init__()
+     ...:         print(super().__get_name__())
+     ...:         print(super().__a__)
+     ...:
+     ...:
+     ...:
+     ...:
+     ...:
+     ...:
+     ...:
+     ...:
+     ...:
+
+
+Unhandled exception in event loop:
+  File "C:\Users\Mark\miniconda3\envs\discord\lib\asyncio\proactor_events.py", line 768, in _loop_self_reading
+    f.result()  # may raise
+  File "C:\Users\Mark\miniconda3\envs\discord\lib\asyncio\windows_events.py", line 808, in _poll
+    value = callback(transferred, key, ov)
+  File "C:\Users\Mark\miniconda3\envs\discord\lib\asyncio\windows_events.py", line 457, in finish_recv
+    raise ConnectionResetError(*exc.args)
+
+Exception [WinError 995] The I/O operation has been aborted because of either a thread exit or an application request
+Press ENTER to continue...
+In [113]: b = B()
+<__main__.A object at 0x00000201CEAB31C0>
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+<ipython-input-113-bb7a6e918aa7> in <module>
+----> 1 b = B()
+
+<ipython-input-112-1f73e196adf3> in __init__(self)
+      3         super().__init__()
+      4         print(super().__get_name__())
+----> 5         print(super().__a__)
+      6
+      7
+
+AttributeError: 'super' object has no attribute '__a__'
+
+In [114]:  class A:
+     ...:     def __init__(self):
+     ...:       __a = True
+     ...:     def __get_name(self):
+     ...:        return a
+     ...:
+     ...:
+     ...:
+     ...:
+
+In [115]:
+
+In [115]: class B(A):
+     ...:     def __init__(self):
+     ...:         super().__init__()
+     ...:         print(super().__get_name())
+     ...:         print(super().__a)
+     ...:
+     ...:
+     ...:
+     ...:
+     ...:
+     ...:
+     ...:
+     ...:
+     ...:
+
+
+Unhandled exception in event loop:
+  File "C:\Users\Mark\miniconda3\envs\discord\lib\asyncio\proactor_events.py", line 768, in _loop_self_reading
+    f.result()  # may raise
+  File "C:\Users\Mark\miniconda3\envs\discord\lib\asyncio\windows_events.py", line 808, in _poll
+    value = callback(transferred, key, ov)
+  File "C:\Users\Mark\miniconda3\envs\discord\lib\asyncio\windows_events.py", line 457, in finish_recv
+    raise ConnectionResetError(*exc.args)
+
+Exception [WinError 995] The I/O operation has been aborted because of either a thread exit or an application request
+Press ENTER to continue...
+In [116]: b = B()
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+<ipython-input-116-bb7a6e918aa7> in <module>
+----> 1 b = B()
+
+<ipython-input-115-551bc9c2d20f> in __init__(self)
+      2     def __init__(self):
+      3         super().__init__()
+----> 4         print(super().__get_name())
+      5         print(super().__a)
+      6
+
+AttributeError: 'super' object has no attribute '_B__get_name'
+
+In [117]: dir(b)
+Out[117]:
+['__bool__',
+ '__class__',
+ '__delattr__',
+ '__dir__',
+ '__doc__',
+ '__eq__',
+ '__format__',
+ '__ge__',
+ '__getattribute__',
+ '__gt__',
+ '__hash__',
+ '__init__',
+ '__init_subclass__',
+ '__le__',
+ '__lt__',
+ '__ne__',
+ '__new__',
+ '__reduce__',
+ '__reduce_ex__',
+ '__repr__',
+ '__setattr__',
+ '__sizeof__',
+ '__str__',
+ '__subclasshook__']
+
+In [118]: %save here
+'' was not found in history, as a file, url, nor in the user namespace.
+
+In [119]: %save
+UsageError: Missing filename.
+
+In [120]: %save productivityPythonnista
+'' was not found in history, as a file, url, nor in the user namespace.
+
+In [121]: %history -g -f productivityPythonnista
+
+In [122]: class B(A):
+     ...:     def __init__(self):
+     ...:         super().__init__()
+     ...:         print(super().__get_name())
+     ...:
+     ...:
+     ...:
+     ...:
+     ...:
+     ...:
+     ...:
+     ...:
+     ...:
+
+In [123]:
+
+In [123]: b = B()
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+<ipython-input-123-bb7a6e918aa7> in <module>
+----> 1 b = B()
+
+<ipython-input-122-c1870680dbfe> in __init__(self)
+      2     def __init__(self):
+      3         super().__init__()
+----> 4         print(super().__get_name())
+      5
+      6
+
+AttributeError: 'super' object has no attribute '_B__get_name'
+
+In [124]: super(B,b)>__get_name()
+---------------------------------------------------------------------------
+NameError                                 Traceback (most recent call last)
+<ipython-input-124-859080b103f5> in <module>
+----> 1 super(B,b)>__get_name()
+
+NameError: name '__get_name' is not defined
+
+In [125]:  class A:
+     ...:     __a__ = None
+     ...:     def __init__(self):
+     ...:       self.__a__ = True
+     ...:     def __get_name(self):
+     ...:        return self.__a__
+     ...:
+     ...:
+     ...:
+     ...:
+     ...:
+
+In [126]: class B(A):
+     ...:     def __init__(self):
+     ...:         super().__init__()
+     ...:         print(super().__get_name())
+     ...:
+     ...:
+     ...:
+     ...:
+     ...:
+     ...:
+     ...:
+     ...:
+     ...:
+
+In [127]: b = B()
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+<ipython-input-127-bb7a6e918aa7> in <module>
+----> 1 b = B()
+
+<ipython-input-126-c1870680dbfe> in __init__(self)
+      2     def __init__(self):
+      3         super().__init__()
+----> 4         print(super().__get_name())
+      5
+      6
+
+AttributeError: 'super' object has no attribute '_B__get_name'
+
+In [128]:                                                                                                                                                
