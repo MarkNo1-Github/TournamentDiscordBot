@@ -126,3 +126,7 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+tdbm/data/test_data/
+
+tdbm/logger/test_logger/

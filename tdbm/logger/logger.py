@@ -104,6 +104,10 @@ class Logger(Folder):
             for level, message in magic.items():
                 self.callback [level] (message)
 
+    def __log__(self, **magic):
+        if magic:
+            for level, message in magic.items():
+                self.callback [level] (message)
 
 
 if __name__ == '__main__':
