@@ -3,7 +3,7 @@ from tdbm.logger import Logger, Success, Error, Now
 import os
 import pandas as pd
 from pandas import read_hdf
-from datetime import date
+from datetime import datetime
 from tabulate import tabulate
 
 
@@ -12,7 +12,7 @@ class IData:
     def __init__(self, **kw):
         self.__dict__ = kw
         self.__dict__.update({'id':int()})
-        self.__dict__.update({'created':pd.Timestamp(date.today())})
+        self.__dict__.update({'created':pd.Timestamp(datetime.now())})
 
     def __str__(self):
         return str(self.__dict__)
@@ -103,7 +103,9 @@ class HDFController(HDFControllerLogger):
             return False
 
     def __create_dataframe__(self):
-        return  pd.DataFrame(self.DataType(), index=[1])
+        data = pd.DataFrame(self.DataType(), index=[1])
+        data = data[0:0]
+        return data
 
     def __status__(self):
         super().__CHECKPOINT__()
@@ -112,7 +114,7 @@ class HDFController(HDFControllerLogger):
         self.__status__()
 
     def __show__(self, data):
-        return "```" + f'\n\n{tabulate(data, headers="keys", tablefmt="plain")}' + "\n```"
+        return "```" + f'\n{tabulate(data, headers="keys", tablefmt="plain")}' + "\n```"
 
 
 
@@ -125,8 +127,11 @@ class HDFDataLogger:
     __LOAD__  = lambda self : self.__log__(debug=f'[{self.__class_name__}]: Load data')
     __RESET__ = lambda self : self.__log__(debug=f'[{self.__class_name__}]: Reset data')
     __NEW_ROW__ = lambda self, id : self.__log__(debug=f'[{self.__class_name__}]: New row with ID:{id}')
-    __REMOVE_OK__ = lambda self, col, val : self.__log__(debug=f'[{self.__class_name__}]: record with col:{col} and val:{val} removed.')
-    __REMOVE_ERROR__ = lambda self, col, val : self.__log__(error=f'[{self.__class_name__}]: Error - No record found with col:{col} and val:{val}')
+    __REMOVE_OK__ = lambda self, col, val : self.__log__(debug=f'[{self.__class_name__}]: Removed record with col:{col} and val:{val}')
+    __REMOVE_ERROR__ = lambda self, col, val : self.__log__(error=f'[{self.__class_name__}]: Removed Error - No record found with col:{col} and val:{val}')
+    __MODIFY_OK__ = lambda self, col, val, new_val : self.__log__(debug=f'[{self.__class_name__}]: Modified record with col:{col} val:{val}->{new_val}')
+    __MODIFY_ERROR__ = lambda self, col, val, new_val : self.__log__(error=f'[{self.__class_name__}]: Modified Error - No record found with col:{col} val:{val}->{new_val}')
+
 
     def __init__(self, name, DataType):
         self.controller = HDFController(name, DataType)
@@ -134,8 +139,7 @@ class HDFDataLogger:
         self.data = self.controller()
         self.counter_id = 0
         if not self.data.empty:
-            self.counter_id = self.data['id'].max()
-
+                self.counter_id = self.data['id'].max()
         self.__INIT__()
 
 
@@ -151,32 +155,48 @@ class HDFData(HDFDataLogger):
     def load(self):
         self.data = self.controller()
         self.__LOAD__()
+        return True
 
     def reset(self):
         self.controller(self.controller.__create_dataframe__())
         self.data = self.controller()
         self.counter_id = 0
         self.__RESET__()
+        return True
 
     def add(self, rowclass):
         rowclass.id = self.get_id()
         self.data = self.data.append(pd.Series(rowclass.__dict__), ignore_index=True)
         self.__NEW_ROW__(self.counter_id)
+        return True
 
     def remove(self, col, value):
         to_remove = self.data.loc[self.data[col] == value]
         if not to_remove.empty:
             self.data = self.data[self.data[col] != value]
             self.__REMOVE_OK__(col, value)
+            return True
         else:
             self.__REMOVE_ERROR__(col, value)
+            return False
+
+    def modify(self, col, value, new_val):
+        to_modify = self.data.loc[self.data[col] == value]
+        if not to_modify.empty:
+            self.data.loc[self.data[col] == value, col] = new_val
+            self.__MODIFY_OK__(col, value, new_val)
+            return True
+        else:
+            self.__MODIFY_ERROR__(col, value, new_val)
+            return False
 
     def get_id(self):
         self.counter_id += 1
         return self.counter_id
 
     def show(self):
-        print(self.controller.__show__(self.data))
+        return self.controller.__show__(self.data)
+
 
 
 if __name__ == '__main__':
@@ -186,13 +206,15 @@ if __name__ == '__main__':
 
     data = HDFData(data_folder, MyDataTypes)
     data.add(IData(name="Marco", surname="Treglia", email="cool@yeah.it", address="secret", age=28, heigh=1.75))
-    data.show()
+    print(data.show())
     data.save()
+    data.modify("name", "Marco", "Aldo")
+    print(data.show())
     data.remove("id", 0)
-    data.show()
+    print(data.show())
     data.save()
     data.reset()
-    data.show()
+    print(data.show())
     data.save()
 
     # data.add(MyData(name="Marco", surname="Treglia", email="cool@yeah.it", address="secret"))

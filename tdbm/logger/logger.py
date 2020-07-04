@@ -9,13 +9,14 @@ import os
 __version__ = '0.1.7'
 
 
-FORMAT = f'''%(process)d {'_'}%(levelname)s{'_'} %(asctime)s:%(name)s - %(message)s'''
+FORMAT = f'''%(process)d %(levelname).4s %(asctime)s:[%(name)s]: %(message)s'''
 
 
 # Every Day
 ROTATION = 'd'
 
 # Discord Labels
+Normal = lambda x : f"{x}"
 Success = lambda x : f"**`SUCCESS`** {x}"
 Error = lambda y : f"**`ERROR`** {y}"
 Now = lambda : str(date.today())
