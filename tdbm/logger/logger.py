@@ -93,10 +93,10 @@ class Logger(Folder):
         self.logger.setLevel(level)
 
         self.callback = {
-            self.DEBUG : lambda x : self.logger.debug(x),
-            self.INFO : lambda x : self.logger.info(x),
-            self.WARN : lambda x : self.logger.warning(x),
-            self.ERROR : lambda x : self.logger.error(x),
+            self.DEBUG : self.logger.debug,
+            self.INFO : self.logger.info,
+            self.WARN : self.logger.warning,
+            self.ERROR : self.logger.error,
         }
 
 

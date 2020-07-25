@@ -20,6 +20,9 @@ class IData:
     def __call__(self):
         return self.__dict__
 
+    def as_series(self):
+        return pd.Series(self.__dict__)
+
 
 class HDFControllerLogger(Logger):
     _init_times = 0
@@ -138,7 +141,10 @@ class HDFDataLogger:
         self.__log__ = self.controller.__log__
         self.data = self.controller()
         self.counter_id = 0
-        if not self.data.empty:
+        self.DataType = DataType
+        if isinstance(self.DataType, IData):
+            self.counter_id = self.DataType()['id']
+        elif not self.data.empty:
                 self.counter_id = self.data['id'].max()
         self.__INIT__()
 
@@ -164,9 +170,9 @@ class HDFData(HDFDataLogger):
         self.__RESET__()
         return True
 
-    def add(self, rowclass):
+    def add(self, rowclass: IData):
         rowclass.id = self.get_id()
-        self.data = self.data.append(pd.Series(rowclass.__dict__), ignore_index=True)
+        self.data = self.data.append(rowclass.as_series(), ignore_index=True)
         self.__NEW_ROW__(self.counter_id)
         return True
 
@@ -208,7 +214,7 @@ if __name__ == '__main__':
     data.add(IData(name="Marco", surname="Treglia", email="cool@yeah.it", address="secret", age=28, heigh=1.75))
     print(data.show())
     data.save()
-    data.modify("name", "Marco", "Aldo")
+    data.modify("name", "Marco", "Mark")
     print(data.show())
     data.remove("id", 0)
     print(data.show())
@@ -216,6 +222,3 @@ if __name__ == '__main__':
     data.reset()
     print(data.show())
     data.save()
-
-    # data.add(MyData(name="Marco", surname="Treglia", email="cool@yeah.it", address="secret"))
-    # data.load()

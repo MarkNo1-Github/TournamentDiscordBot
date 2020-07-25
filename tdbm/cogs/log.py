@@ -42,9 +42,8 @@ class LoggerExtension(Cog):
             self.Log(debug=message)
         await ctx.send(status(message))
 
-    def log_message(self, level, message):
-        self.Log(**{level:message})
-
+    def log_message(self, log_message):
+        self.Log(**log_message)
 
 
     async def send_all_channels(self, message):
